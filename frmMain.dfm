@@ -1,9 +1,10 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
+  BorderStyle = bsToolWindow
   Caption = 'PTT Control'
-  ClientHeight = 301
-  ClientWidth = 467
+  ClientHeight = 278
+  ClientWidth = 472
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +12,8 @@ object MainForm: TMainForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object TxLabeledEdit: TLabeledEdit
@@ -53,18 +56,30 @@ object MainForm: TMainForm
     ReadOnly = True
     TabOrder = 3
   end
+  object TxChkBox: TCheckBox
+    Left = 344
+    Top = 80
+    Width = 97
+    Height = 49
+    Caption = 'TX'
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    State = cbGrayed
+    TabOrder = 4
+    OnClick = TxChkBoxClick
+  end
   object DdeClientConv: TDdeClientConv
-    DdeService = 'HRD_RADIO_000'
-    DdeTopic = 'HRD_CAT'
     ConnectMode = ddeManual
     FormatChars = True
     OnClose = DdeClientConvClose
     OnOpen = DdeClientConvOpen
     Left = 224
     Top = 16
-    LinkInfo = (
-      'Service HRD_RADIO_000'
-      'Topic HRD_CAT')
   end
   object TxDdeClientItem: TDdeClientItem
     DdeConv = DdeClientConv
