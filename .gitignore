@@ -1,0 +1,9 @@
+# ignore Borland Project .local files
+*.local
+# ignore Delphi Project files
+*.cfg
+*.identcache
+# ignore some folders
+bin
+dcu
+__history
