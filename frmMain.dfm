@@ -11,13 +11,16 @@ object MainForm: TMainForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object TxLabeledEdit: TLabeledEdit
-    Left = 104
+    Left = 8
     Top = 224
     Width = 121
     Height = 21
@@ -46,7 +49,7 @@ object MainForm: TMainForm
     OnClick = DisconnectBtnClick
   end
   object LinkStatusLabeledEdit: TLabeledEdit
-    Left = 240
+    Left = 144
     Top = 224
     Width = 121
     Height = 21
@@ -72,6 +75,18 @@ object MainForm: TMainForm
     State = cbGrayed
     TabOrder = 4
     OnClick = TxChkBoxClick
+  end
+  object HotkeyLabeledEdit: TLabeledEdit
+    Left = 288
+    Top = 224
+    Width = 121
+    Height = 21
+    EditLabel.Width = 68
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Hotkey Status'
+    ReadOnly = True
+    TabOrder = 5
+    Text = 'UP'
   end
   object DdeClientConv: TDdeClientConv
     ConnectMode = ddeManual

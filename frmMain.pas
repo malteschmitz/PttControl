@@ -15,6 +15,7 @@ type
     DisconnectBtn: TButton;
     LinkStatusLabeledEdit: TLabeledEdit;
     TxChkBox: TCheckBox;
+    HotkeyLabeledEdit: TLabeledEdit;
     procedure TxDdeClientItemChange(Sender: TObject);
     procedure ConnectBtnClick(Sender: TObject);
     procedure DisconnectBtnClick(Sender: TObject);
@@ -23,8 +24,11 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure TxChkBoxClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     procedure SetTxValue(state: String);
+    procedure Hotkey(var Message: TMessage); Message WM_HOTKEY;
   end;
 
 var
@@ -66,12 +70,40 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetWindowLong(TxChkBox.Handle, GWL_STYLE,
     GetWindowLong(TxChkBox.Handle, GWL_STYLE) or BS_PUSHLIKE);
+
+  RegisterHotKey(Handle, 12, 0, VK_F3);
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   if TxChkBox.Enabled then
     DdeClientConv.CloseLink;
+
+  UnregisterHotKey(Handle, 12);
+end;
+
+procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F3 then
+    HotkeyLabeledEdit.Text := 'DOWN';
+end;
+
+procedure TMainForm.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_F3 then
+    HotkeyLabeledEdit.Text := 'UP';
+end;
+
+procedure TMainForm.Hotkey(var Message: TMessage);
+begin
+  if Message.WParam = 12 then
+  begin
+    SetForegroundWindow(Handle);
+    ShowWindow(Handle, SW_RESTORE);
+    HotkeyLabeledEdit.Text := 'DOWN';
+  end;
 end;
 
 procedure TMainForm.SetTxValue(state: String);
